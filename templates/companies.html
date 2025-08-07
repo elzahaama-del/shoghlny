@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/companies.css') }}">
+
+<div class="companies-container">
+    <h1>الشركات المميزة</h1>
+
+    {% if companies %}
+        <div class="company-grid">
+            {% for company in companies %}
+                <div class="company-card">
+                    <img src="{{ company.logo_url or url_for('static', filename='images/default-logo.png') }}" alt="شعار {{ company.name }}" class="company-logo">
+                    <h2 class="company-name">{{ company.name }}</h2>
+                    <p class="company-desc">{{ company.description[:100] }}...</p>
+                    <p class="company-jobs">عدد الوظائف: {{ company.job_count }}</p>
+                    <a href="{{ url_for('jobs_by_company', company_id=company.id) }}" class="view-jobs-btn">عرض الوظائف</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-companies">لا توجد شركات حالياً.</div>
+    {% endif %}
+</div>
+<style>
+  body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    background-color: #f8f9fa;
+}
+
+.companies-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.companies-container h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #343a40;
+}
+
+.company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.company-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.company-card:hover {
+    transform: translateY(-5px);
+}
+
+.company-logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 2px solid #0d6efd;
+}
+
+.company-name {
+    font-size: 20px;
+    color: #0d6efd;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.company-desc {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 10px;
+    height: 40px;
+    overflow: hidden;
+}
+
+.company-jobs {
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+.view-jobs-btn {
+    display: inline-block;
+    background-color: #198754;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.view-jobs-btn:hover {
+    background-color: #157347;
+}
+
+.no-companies {
+    text-align: center;
+    font-size: 20px;
+    color: #888;
+    padding: 100px 0;
+}
+
+</style>
+{% endblock %}

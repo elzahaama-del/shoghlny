@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>نتائج البحث عن: "{{ keyword }}"</h2>
+    {% if results %}
+        <ul class="list-group mt-3">
+            {% for job in results %}
+                <li class="list-group-item">
+                    <h5>{{ job.title }}</h5>
+                    <p>{{ job.description[:100] }}...</p>
+                    <a href="#" class="btn btn-sm btn-primary">تفاصيل</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>لم يتم العثور على نتائج.</p>
+    {% endif %}
+</div>
+{% endblock %}

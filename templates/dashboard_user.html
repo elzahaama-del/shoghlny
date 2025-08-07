@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}لوحة تحكم المستخدم - شغلني{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2 class="animate__animated animate__fadeInRight">👤 لوحة تحكم المتقدم</h2>
+
+  <!-- كروت إحصائية -->
+  <div class="row text-center my-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm animate__animated animate__zoomIn">
+        <div class="card-body">
+          <h5>عدد الطلبات</h5>
+          <p class="display-6 text-primary">{{ applied_jobs_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm animate__animated animate__zoomIn animate__delay-1s">
+        <div class="card-body">
+          <h5>الوظائف المحفوظة</h5>
+          <p class="display-6 text-warning">{{ saved_jobs_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm animate__animated animate__zoomIn animate__delay-2s">
+        <div class="card-body">
+          <h5>الوظائف المقبول فيها</h5>
+          <p class="display-6 text-success">{{ accepted_jobs_count }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- جدول الوظائف المقدَّم عليها -->
+  <div class="card shadow-sm mb-5 animate__animated animate__fadeInUp">
+    <div class="card-header bg-dark text-white">
+      <h5>📑 طلبات الوظائف</h5>
+    </div>
+    <div class="card-body table-responsive">
+      <table class="table table-striped text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>الوظيفة</th>
+            <th>الشركة</th>
+            <th>تاريخ التقديم</th>
+            <th>الحالة</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for application in applications %}
+          <tr>
+            <td>{{ application.job.title }}</td>
+            <td>{{ application.job.company.name }}</td>
+            <td>{{ application.applied_at.strftime('%Y-%m-%d') }}</td>
+            <td>
+              {% if application.status == 'pending' %}
+                <span class="badge bg-warning text-dark">قيد المراجعة</span>
+              {% elif application.status == 'accepted' %}
+                <span class="badge bg-success">تم القبول</span>
+              {% elif application.status == 'rejected' %}
+                <span class="badge bg-danger">مرفوض</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('job_details', job_id=application.job.id) }}" class="btn btn-sm btn-outline-info">عرض</a>
+              <a href="{{ url_for('withdraw_application', app_id=application.id) }}" class="btn btn-sm btn-outline-danger">سحب الطلب</a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="text-muted">لم تقم بالتقديم على أي وظيفة بعد.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- روابط سريعة -->
+  <div class="d-flex justify-content-between">
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+      <i class="fas fa-home"></i> العودة للرئيسية
+    </a>
+    <a href="{{ url_for('settings') }}" class="btn btn-outline-dark">
+      <i class="fas fa-cog"></i> تعديل البيانات الشخصية
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}نشر وظيفة جديدة{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp">
+                <div class="card-body p-5">
+                    <h2 class="mb-4 text-center text-primary">✍️ نشر وظيفة جديدة</h2>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        {% for category, message in messages %}
+                          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" action="{{ url_for('post') }}">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">المسمى الوظيفي</label>
+                            <input type="text" name="title" id="title" class="form-control form-control-lg" placeholder="مثال: مصمم واجهات UI/UX" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="location" class="form-label">الموقع</label>
+                            <input type="text" name="location" id="location" class="form-control form-control-lg" placeholder="مثال: القاهرة" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label">الوصف الوظيفي</label>
+                            <textarea name="description" id="description" class="form-control" rows="6" placeholder="اكتب تفاصيل الوظيفة هنا..." required></textarea>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg">🚀 نشر الوظيفة الآن</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-link text-secondary">🔙 العودة للوحة التحكم</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

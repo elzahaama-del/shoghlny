@@ -1,0 +1,179 @@
+/*===============================
+  💼 Shoghlny Global Style File
+  ===============================*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Cairo', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f6fafd;
+  color: #333;
+  direction: rtl;
+}
+
+/* HEADER */
+header {
+  background: #00acc1;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeInDown 0.8s ease-in-out;
+}
+
+header .logo {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+nav a:hover {
+  text-decoration: underline;
+  color: #e0f7fa;
+}
+
+/* HERO SECTION */
+.hero {
+  padding: 80px 20px;
+  text-align: center;
+  animation: fadeIn 1.2s ease;
+}
+
+.hero h1 {
+  font-size: 40px;
+  color: #007c91;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.btn-main {
+  background: #00acc1;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-main:hover {
+  background: #00838f;
+}
+
+/* FORM ELEMENTS */
+input, select, textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: 0.3s;
+  width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #00acc1;
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 172, 193, 0.3);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* BUTTONS */
+button {
+  background-color: #00acc1;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background-color: #00838f;
+}
+
+/* CARDS */
+.feature-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+  transition: 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* FOOTER */
+footer {
+  background: #eee;
+  text-align: center;
+  padding: 25px;
+  color: #777;
+  font-size: 14px;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .btn-main {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  nav a {
+    margin-left: 10px;
+    font-size: 14px;
+  }
+}

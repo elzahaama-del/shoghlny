@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+
+<div class="about-container">
+  <h1 class="about-title">من نحن</h1>
+
+  <div class="about-section">
+    <h2>منصة شغلني</h2>
+    <p>
+      "شغلني" هي منصة إلكترونية تهدف إلى ربط الباحثين عن العمل بأصحاب الشركات بكل سهولة واحترافية.
+      نسعى لبناء مجتمع مهني فعّال يساعد في تطور سوق العمل في الوطن العربي.
+    </p>
+  </div>
+
+  <div class="about-section">
+    <h2>رؤيتنا</h2>
+    <p>
+      أن نكون الخيار الأول للباحثين عن فرص عمل ولأصحاب الشركات الباحثين عن موظفين أكفاء.
+      نؤمن بأن التكنولوجيا قادرة على تسهيل الوصول للفرص وتحقيق الطموحات.
+    </p>
+  </div>
+
+  <div class="about-section">
+    <h2>لماذا شغلني؟</h2>
+    <ul>
+      <li>سهولة استخدام المنصة</li>
+      <li>إعلانات وظائف محدثة يوميًا</li>
+      <li>تواصل مباشر مع الشركات</li>
+      <li>لوحة تحكم مخصصة للباحثين والشركات</li>
+      <li>دعم فني واستشارات مجانية</li>
+    </ul>
+  </div>
+
+  <div class="about-section">
+    <h2>تواصل معنا</h2>
+    <p>هل لديك استفسار؟ تواصل معنا عبر البريد الإلكتروني: <a href="mailto:support@shoghlny.com">support@shoghlny.com</a></p>
+  </div>
+</div>
+{% endblock %}
+
+<style>
+  body {
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  background-color: #f5f5f5;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+.about-title {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #0d6efd;
+  padding-top: 30px;
+}
+
+.about-section {
+  padding: 20px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.about-section h2 {
+  font-size: 24px;
+  color: #198754;
+  margin-bottom: 15px;
+}
+
+.about-section p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.8;
+}
+
+.about-section ul {
+  list-style: square;
+  padding-right: 20px;
+}
+
+.about-section ul li {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.about-section a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.about-section a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 28px;
+  }
+
+  .about-section h2 {
+    font-size: 20px;
+  }
+
+  .about-section {
+    padding: 15px 20px;
+  }
+}
+
+</style>

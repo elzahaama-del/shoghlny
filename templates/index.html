@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}الرئيسية - شغلني{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section bg-primary text-white text-center py-5 animate__animated animate__fadeInDown">
+  <h1 class="display-4">مرحبا بك في شغلني!</h1>
+  <p class="lead">منصة الوظائف الأسرع نموًا في العالم العربي</p>
+  <form action="{{ url_for('search_jobs') }}" method="GET" class="d-flex justify-content-center mt-4">
+    <input type="text" name="q" class="form-control w-50 me-2" placeholder="ابحث عن وظيفة...">
+    <button type="submit" class="btn btn-light">🔍 بحث</button>
+  </form>
+</div>
+
+<!-- Stats -->
+<div class="container my-5 text-center">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <h2>{{ stats.jobs }}</h2>
+      <p>وظيفة متاحة</p>
+    </div>
+      
+>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Jobs -->
+ <div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+  
+
+  {% if jobs %}
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for job in jobs %}
+    <div class="col">
+      <div class="card h-100 shadow-sm animate__animated animate__fadeInUp">
+        <div class="card-body">
+          <h5 class="card-title">{{ job.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ job.company_name }}</h6>
+          <p class="card-text">{{ job.description[:100] }}...</p>
+          <span class="badge bg-success">{{ job.category }}</span>
+          <span class="badge bg-info text-dark">{{ job.type }}</span>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <small class="text-muted">تم النشر في {{ job.date_posted.strftime('%Y-%m-%d') }}</small>
+          <a href="{{ url_for('job_details', job_id=job.id) }}" class="btn btn-sm btn-outline-primary">عرض</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+  
+
+
+
+
+
+{% extends "base.html" %}
+
+{% block title %}صندوق الوارد - شغلني{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2 class="mb-4 animate__animated animate__fadeInRight">📥 صندوق الوارد</h2>
+
+  {% if messages %}
+  <div class="list-group">
+    {% for msg in messages %}
+    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {% if not msg.read %}bg-light{% endif %}">
+      <div class="d-flex">
+        <img src="{{ msg.sender_avatar or url_for('static', filename='img/default_avatar.png') }}" alt="Sender" class="rounded-circle me-3" width="50" height="50">
+        <div>
+          <h6 class="mb-1">{{ msg.subject }}</h6>
+          <small class="text-muted">من: {{ msg.sender_name }} - {{ msg.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+          <p class="mb-0 text-muted mt-1">{{ msg.body[:80] }}{% if msg.body|length > 80 %}...{% endif %}</p>
+        </div>
+      </div>
+      <div class="text-end">
+        {% if not msg.read %}
+          <span class="badge bg-primary">جديدة</span><br>
+        {% endif %}
+        <a href="{{ url_for('view_message', msg_id=msg.id) }}" class="btn btn-sm btn-outline-info mt-2">عرض</a>
+        <a href="{{ url_for('delete_message', msg_id=msg.id) }}" class="btn btn-sm btn-outline-danger mt-1">حذف</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center animate__animated animate__fadeIn">
+    لا توجد رسائل واردة حاليًا.
+  </div>
+  {% endif %}
+
+  <div class="mt-4 d-flex justify-content-between">
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+      <i class="fas fa-home"></i> الرئيسية
+    </a>
+    <a href="{{ url_for('sent_messages') }}" class="btn btn-outline-dark">
+      <i class="fas fa-paper-plane"></i> الرسائل المرسلة
+    </a>
+  </div>
+</div>
+{% endblock %}
+  

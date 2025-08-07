@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}لوحة التحكم - شغلني{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="my-4 animate__animated animate__fadeInRight">👨‍💼 لوحة تحكم الشركة</h2>
+
+  <!-- كروت الإحصائيات -->
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm animate__animated animate__fadeInUp">
+        <div class="card-body">
+          <h5 class="card-title">عدد الوظائف</h5>
+          <p class="display-5 text-primary">{{ job_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
+        <div class="card-body">
+          <h5 class="card-title">عدد المتقدمين</h5>
+          <p class="display-5 text-success">{{ applicant_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm animate__animated animate__fadeInUp animate__delay-2s">
+        <div class="card-body">
+          <h5 class="card-title">عدد الشركات التابعة</h5>
+          <p class="display-5 text-warning">{{ company_count }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- زر إنشاء وظيفة جديدة -->
+  <div class="text-end mb-3">
+    <a href="{{ url_for('create_job') }}" class="btn btn-main btn-lg animate__animated animate__fadeInLeft">
+      <i class="fas fa-plus-circle"></i> إنشاء وظيفة جديدة
+    </a>
+  </div>
+
+  <!-- جدول الوظائف -->
+  <div class="card shadow-sm animate__animated animate__fadeIn">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">📋 الوظائف المنشورة</h5>
+    </div>
+    <div class="card-body table-responsive">
+      <table class="table table-striped table-hover text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>العنوان</th>
+            <th>المجال</th>
+            <th>عدد المتقدمين</th>
+            <th>التاريخ</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in jobs %}
+          <tr>
+            <td>{{ job.title }}</td>
+            <td>{{ job.category }}</td>
+            <td>{{ job.applicants|length }}</td>
+            <td>{{ job.created_at.strftime('%Y-%m-%d') }}</td>
+            <td>
+              <a href="{{ url_for('view_applicants', job_id=job.id) }}" class="btn btn-sm btn-outline-primary">عرض المتقدمين</a>
+              <a href="{{ url_for('edit_job', job_id=job.id) }}" class="btn btn-sm btn-outline-secondary">تعديل</a>
+              <a href="{{ url_for('delete_job', job_id=job.id) }}" class="btn btn-sm btn-outline-danger">حذف</a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="text-muted">لا توجد وظائف حالياً.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

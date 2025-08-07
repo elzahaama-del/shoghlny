@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>الوظائف المتاحة - شغلني</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- روابط CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .search-bar {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar input[type="text"] {
+            width: 60%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .job-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .job-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .company-name {
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .job-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .skills {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .skills span {
+            background: #e0f2ff;
+            color: #0077b6;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-left: 6px;
+            display: inline-block;
+        }
+
+        .apply-btn {
+            display: block;
+            margin-top: 15px;
+            background: #0077b6;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #005f87;
+        }
+
+        .no-jobs {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #999;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>الوظائف المتاحة</h1>
+
+    <form action="{{ url_for('search_jobs') }}" method="get" class="search-bar">
+        <input type="text" name="keyword" placeholder="ابحث عن وظيفة أو مهارة...">
+    </form>
+
+    {% if results %}
+    <div class="job-list">
+        {% for job in results %}
+        <div class="job-card">
+            <div class="job-title">{{ job.title }}</div>
+            <div class="company-name">الشركة: {{ job.company.name }}</div>
+            <div class="job-meta">تاريخ النشر: {{ job.created_at.strftime('%Y-%m-%d') }}</div>
+
+            {% if job.company.city %}
+            <div class="job-meta">المدينة: {{ job.company.city }}</div>
+            {% endif %}
+
+            {% if job.company.skills %}
+            <div class="skills">
+                {% for skill in job.company.skills.split(',') %}
+                    <span>{{ skill.strip() }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if current_user.is_authenticated and not current_user.is_company %}
+            <a href="{{ url_for('apply', job_id=job.id) }}" class="apply-btn">تقديم على الوظيفة</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="no-jobs">لا توجد وظائف حالياً</div>
+    {% endif %}
+</div>
+ <style>
+    
+    body {
+    font-family: 'Cairo', sans-serif;
+    background: #0670c7;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+}
+
+.jobs-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: #343a40;
+}
+
+.job-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 30px 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    border-right: 6px solid #0d6efd;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.job-title {
+    font-size: 24px;
+    color: #0d6efd;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.job-meta {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.job-desc {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.skills {
+    margin-top: 10px;
+}
+
+.skill-badge {
+    display: inline-block;
+    background-color: #dee2e6;
+    color: #212529;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    margin: 5px 5px 0 0;
+    transition: 0.3s ease;
+}
+
+.skill-badge:hover {
+    background-color: #adb5bd;
+    color: white;
+}
+
+.apply-btn {
+    display: inline-block;
+    margin-top: 20px;
+    background: #198754;
+    color: white;
+    padding: 12px 30px;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.apply-btn:hover {
+    background: #157347;
+}
+
+.no-jobs {
+    text-align: center;
+    font-size: 24px;
+    color: #888;
+    padding: 100px 0;
+    font-weight: 500;
+}
+
+ </style>
+</body>
+</html>
