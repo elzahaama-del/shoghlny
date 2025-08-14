@@ -9,7 +9,6 @@
             <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp">
                 <div class="card-body p-5">
                     <h2 class="mb-4 text-center text-primary">✍️ نشر وظيفة جديدة</h2>
-
                     {% with messages = get_flashed_messages(with_categories=true) %}
                       {% if messages %}
                         {% for category, message in messages %}
@@ -21,7 +20,8 @@
                       {% endif %}
                     {% endwith %}
 
-                    <form method="POST" action="{{ url_for('post') }}">
+                   <form method="POST" action="{{ url_for('create_job') }}">
+
                         <div class="mb-3">
                             <label for="title" class="form-label">المسمى الوظيفي</label>
                             <input type="text" name="title" id="title" class="form-control form-control-lg" placeholder="مثال: مصمم واجهات UI/UX" required>
@@ -43,7 +43,8 @@
                     </form>
 
                     <div class="text-center mt-4">
-                        <a href="{{ url_for('dashboard') }}" class="btn btn-link text-secondary">🔙 العودة للوحة التحكم</a>
+<a href="{{ url_for('user_dashboard') }}" class="btn btn-link text-secondary">🔙 العودة للوحة التحكم</a>
+
                     </div>
                 </div>
             </div>

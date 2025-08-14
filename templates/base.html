@@ -1,134 +1,394 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="فرصتك - منصة مجانية توفر لك أفضل الوظائف الموثوقة والتحقق من مصداقية جميع العروض. سجّل الآن وابدأ في بناء مستقبلك المهني بسهولة وأمان.">
   <!-- Bootstrap RTL -->
+  <title>{% block title %}فرصتك{% endblock %}</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
-  <!-- Google Fonts -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
 
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-  <!-- Animate.css -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
 
-  <style>
-    body {
-      font-family: 'Cairo', sans-serif;
-      background-color: #f4f7fc;
-      color: #333;
-    }
-    nav {
-      background: linear-gradient(to left, #0d6efd, #0948b3);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    nav .navbar-brand {
-      font-weight: bold;
-      font-size: 24px;
-    }
-    nav a {
-      color: white !important;
-      margin-right: 15px;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: #ffc107 !important;
-    }
-    footer {
-      background-color: #0d6efd;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      margin-top: 40px;
-    }
-    .content-wrapper {
-      padding: 30px;
-      min-height: 80vh;
-    }
-    .btn-main {
-      background-color: #ffc107;
-      color: #000;
-      border: none;
-    }
-    .btn-main:hover {
-      background-color: #e0a800;
-      color: white;
-    }
-  </style>
 
   {% block extra_head %}{% endblock %}
 </head>
-
 <body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 animate__animated animate__fadeInDown">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-warning" href="{{ url_for('index') }}">
-      <i class="fas fa-briefcase"></i> شغلني
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home"></i> الرئيسية</a></li>
-<a class="nav-link" href="{{ url_for('show_jobs') }}"><i class="fas fa-briefcase"></i> الوظائف</a>
-
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('companies') }}"><i class="fas fa-building"></i> الشركات</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}"><i class="fas fa-info-circle"></i> من نحن</a></li>
-
-        {% if session.get('user_id') or session.get('company_id') %}
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('messages') }}"><i class="fas fa-envelope"></i> الرسائل</a></li>
-        {% endif %}
-      </ul>
-
-      <ul class="navbar-nav mb-2 mb-lg-0">
-        {% if session.get('user_id') or session.get('company_id') %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-              <i class="fas fa-user-circle me-1"></i> مرحبًا
-            </a>
-            <ul class="dropdown-menu text-end animate__animated animate__fadeIn">
-              <li><a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt me-1"></i> لوحة التحكم</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('messages') }}"><i class="fas fa-envelope me-1"></i> الرسائل</a></li>
-              <li><a class="dropdown-item text-danger" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt me-1"></i> تسجيل الخروج</a></li>
-            </ul>
-          </li>
-        {% else %}
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> إنشاء حساب</a></li>
-        {% endif %}
-      </ul>
-    </div>
+  <!-- Animated background (decorative) -->
+  <div class="bg-animated">
+    <div class="bg-shape s1"></div>
+    <div class="bg-shape s2"></div>
+    <div class="bg-shape s3"></div>
   </div>
-</nav>
 
-<!-- محتوى الصفحة -->
-<div class="container content-wrapper">
-  {% block content %}{% endblock %}
-</div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark main-nav shadow-lg">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+     
+        <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo" width="80" height="70">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-<!-- تذييل الصفحة -->
-<footer class="animate__animated animate__fadeInUp">
-  <p>© 2025 شغلني - جميع الحقوق محفوظة</p>
-  <div class="alert alert-warning mt-5 text-center shadow-sm" role="alert" style="direction: rtl;">
-  🚨 <strong>تنويه هام:</strong> منصة <span class="text-primary">شغلني</span> غير مسؤولة عن أي تلاعب أو احتيال من قبل أصحاب العمل. يرجى التحقق من مصداقية الجهات المعلنة قبل تقديم أي بيانات أو مبالغ مالية.
-</div>
-  <div>
-    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
-    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-    <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home me-1"></i>الرئيسية</a></li>
+           <li class="nav-item"><a class="nav-link" href="{{ url_for('jobs_list') }}"><i class="fas fa-building me-1"></i>الوظايف</a></li>
+         <li class="nav-item"><a class="nav-link" href="{{ url_for('companies') }}"><i class="fas fa-building me-1"></i>الشركات</a></li> 
+
+          
+        
+             
+
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}"><i class="fas fa-info-circle me-1"></i>من نحن</a></li>
+
+          {% if session.get('user_id') or session.get('company_id') %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('messages') }}"><i class="fas fa-envelope me-1"></i>الرسائل</a></li>
+          {% endif %}
+        </ul>
+
+        <!-- Right side: Auth buttons / user menu -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
+          {% if current_user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user-circle fa-lg me-2"></i>
+                <span class="d-none d-lg-inline">{{ current_user.username or current_user.name or 'المستخدم' }}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end text-end">
+                <!-- لو عندك dashboard واحد عام استبدل 'user_dashboard' -->
+                <li><a class="dropdown-item" href="{{ url_for('user_dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i>لوحة التحكم</a></li>
+                <div class="mt-3"><a class="dropdown-item" href="{{ url_for('view_applicants', job_id=1) }}">
+    <i class="fas fa-users"></i> المتقدمين
+</a>
+                <!-- <li><a class="dropdown-item" href="{{ url_for('profile') }}"><i class="fas fa-user me-2"></i>الملف الشخصي</a></li> -->
+                <!-- <li><a class="dropdown-item" href="{{ url_for('settings') }}"><i class="fas fa-cog me-2"></i>الإعدادات</a></li> -->
+                <!-- <li><hr class="dropdown-divider"></li> -->
+
+
+                <li><a class="dropdown-item" href="{{ url_for('messages') }}"><i class="fp
+                  as fa-envelope me-2"></i>رسائلي</a></li>
+                <li><hr class="dropdown-divider"></li>
+            
+
+            <a class="dropdown-item" href="{{ url_for('logout') }}">
+    <i class="fas fa-sign-out-alt me-2"></i>تسجيل الخروج
+</a>
+
+              </ul> 
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link btn btn-outline-light btn-sm me-2" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt me-1"></i>تسجيل الدخول</a></li>
+            <li class="nav-item"><a class="nav-link btn btn-warning btn-sm text-dark" href="{{ url_for('register') }}"><i class="fas fa-user-plus me-1"></i>إنشاء حساب</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content wrapper -->
+  <main class="site-main">
+    <div class="container content-wrapper py-5">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, msg in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ msg }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container text-center py-4">
+    <!-- صورة اللوجو فوق النص -->
+    <div> 
+       <h5 class="mt-3">فرصتك - منصة الوظائف الأسرع نموًا في العالم العربي</h5>
+        <span class="highlight-green">نسخة تجريبية</span>
+        <br>
+ <small class="footer-text support-announcement">
+      قريبا سيتم تشغيل دعم فني وقسم الشكاوي
+    </small>
+    <br>
+         <small class="footer-text highlight-red">
+      تحقق من مصداقية الوظائف قبل التعامل ولا ترسل أي فلوس لأي شخص ع المنصه   .
+    </small>
+    <br>
+     <small class="footer-text support-announcement">
+    قريبا المنصه ستدعم vipبسعر رمزي جدا
+    </small>
+    </div>
+
+    <br>
+    <img src="{{ url_for('static', filename='LOGO.jpg') }}" alt="Logo" width="50" height="50">
+    <br>
+     
+    <p class="mb-1 footer-text">
+      
+      © 2025 فرصتك — جميع الحقوق محفوظة
+    </p>
+    <small class="footer-text">
+     
+    </small>
+    <br>
+   
+    <br>
+   
   </div>
 </footer>
 
-<!-- ملفات الجافاسكريبت -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-{% block extra_scripts %}{% endblock %}
+
+<style>
+      
+   .footer-text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    color: #bbb; /* لون رمادي فاتح للنص الأساسي */
+    animation: fadeUp 3s ease-in-out infinite alternate;
+  }
+
+  .highlight-green {
+    color: #5fe90f; /* أخضر فسفوري */
+    font-weight: 600;
+    animation: glowGreen 2.5s ease-in-out infinite alternate;
+  }
+
+  .highlight-red {
+    color: #f70303; /* أحمر قوي */
+    font-weight: 600;
+    animation: glowRed 2.5s ease-in-out infinite alternate;
+  }
+
+  .support-announcement {
+    color: #ff8c00; /* برتقالي دافي */
+    font-weight: bold;
+    animation: pulse 2.5s ease-in-out infinite alternate;
+  }
+
+  /* الحركات */
+  @keyframes fadeUp {
+    0% {
+      opacity: 0.7;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+  }
+
+  @keyframes glowGreen {
+    0% {
+      text-shadow: 0 0 5px #5fe90f;
+    }
+    100% {
+      text-shadow: 0 0 15px #a4ff39;
+    }
+  }
+
+  @keyframes glowRed {
+    0% {
+      text-shadow: 0 0 5px #f70303;
+    }
+    100% {
+      text-shadow: 0 0 15px #ff5858;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+</style>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  {% block extra_scripts %}{% endblock %}
 </body>
 </html>
+<style>
+    :root{
+  --primary-1: #0d6efd;
+  --primary-2: #0948b3;
+  --accent: #ffc107;
+  --bg: #f4f7fc;
+  --card: #ffffff;
+  --muted: #6c757d;
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
+body{
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: #222;
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Animated background shapes (subtle) */
+.bg-animated{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-shape{
+  position: absolute;
+  filter: blur(40px);
+  opacity: 0.17;
+  transform: translateZ(0);
+}
+.bg-shape.s1{
+  width: 720px; height: 420px;
+  right: -120px; top: -100px;
+  background: linear-gradient(135deg, rgba(13,110,253,1), rgba(9,72,179,1));
+  border-radius: 40%;
+  animation: float1 12s ease-in-out infinite;
+}
+.bg-shape.s2{
+  width: 520px; height: 320px;
+  left: -90px; bottom: -60px;
+  background: linear-gradient(135deg, rgba(255,193,7,1), rgba(255,142,0,1));
+  border-radius: 40%;
+  animation: float2 18s ease-in-out infinite;
+}
+.bg-shape.s3{
+  width: 340px; height: 200px;
+  right: 10%; bottom: 20%;
+  background: linear-gradient(135deg, rgba(0,200,160,0.9), rgba(0,150,255,0.85));
+  border-radius: 50%;
+  animation: float3 16s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0% { transform: translateY(0) rotate(0deg); }
+  50%{ transform: translateY(30px) rotate(6deg); }
+  100%{ transform: translateY(0) rotate(0deg); }
+}
+@keyframes float2 {
+  0% { transform: translateY(0) rotate(-4deg); }
+  50%{ transform: translateY(-25px) rotate(4deg); }
+  100%{ transform: translateY(0) rotate(-4deg); }
+}
+@keyframes float3 {
+  0% { transform: translateY(0) scale(1); }
+  50%{ transform: translateY(20px) scale(1.05); }
+  100%{ transform: translateY(0) scale(1); }
+}
+
+/* Navbar */
+.main-nav{
+  background: linear-gradient(90deg, var(--primary-1), var(--primary-2));
+  z-index: 10;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.navbar-brand{
+  font-weight:800;
+  font-size:1.35rem;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.brand-logo{
+  font-size:1.55rem;
+  transform: translateY(-1px);
+}
+.brand-text{
+  color: var(--accent);
+  font-weight:800;
+}
+
+/* Links */
+.nav-link{
+  color: rgba(255,255,255,0.95) !important;
+  font-weight:600;
+}
+.nav-link:hover{ color: #fff !important; opacity:0.95; }
+
+/* Buttons in navbar */
+.navbar .btn-outline-light{
+  border-color: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.navbar .btn-outline-light:hover{
+  background: rgba(255,255,255,0.06);
+  color:#fff;
+}
+
+/* Content wrapper - make it above animated background */
+.content-wrapper{
+  position: relative;
+  z-index: 5;
+  min-height: 60vh;
+}
+
+/* Card look */
+.card{
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(16,24,40,0.06);
+}
+
+/* Buttons */
+.btn-main{
+  background: linear-gradient(90deg, var(--accent), #ffb000);
+  border: none;
+  color: #000;
+  font-weight:700;
+  padding: 10px 18px;
+  border-radius: 10px;
+  transition: transform .14s ease, box-shadow .14s ease;
+}
+.btn-main:hover{ transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+
+/* Footer */
+.footer{
+  background: linear-gradient(180deg,#083f90 0%, #0552b8 100%);
+  color: #fff;
+  position: relative;
+  z-index: 5;
+  margin-top: 40px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px){
+  .brand-text{ font-size: 1.05rem; }
+  .bg-shape.s1{ display:none; }
+}
+
+/* small helpers */
+.text-muted-small{ color: var(--muted); font-size:0.95rem; }
+
+/* make flash alerts more visible on top of bg */
+.alert{
+  position: relative;
+  z-index: 8;
+}
+
+</style>

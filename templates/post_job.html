@@ -21,7 +21,8 @@
             {% endif %}
           {% endwith %}
 
-          <form method="POST" action="{{ url_for('post') }}">
+         <form method="POST" action="{{ url_for('create_job') }}">
+
             <div class="mb-3">
               <label for="title" class="form-label">المسمى الوظيفي</label>
               <input type="text" name="title" id="title" class="form-control form-control-lg" placeholder="مثال: مطور Python" required>

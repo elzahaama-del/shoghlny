@@ -1,1 +1,143 @@
-"# shoghlny" 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap RTL -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f4f7fc;
+      color: #333;
+    }
+    nav {
+      background: linear-gradient(to left, #0d6efd, #0948b3);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    nav .navbar-brand {
+      font-weight: bold;
+      font-size: 24px;
+    }
+    nav a {
+      color: white !important;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: #ffc107 !important;
+    }
+    footer {
+      background-color: #0d6efd;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .content-wrapper {
+      padding: 30px;
+      min-height: 80vh;
+    }
+    .btn-main {
+      background-color: #ffc107;
+      color: #000;
+      border: none;
+    }
+    .btn-main:hover {
+      background-color: #e0a800;
+      color: white;
+    }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 animate__animated animate__fadeInDown">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-warning" href="{{ url_for('index') }}">
+      <i class="fas fa-briefcase"></i> شغلني
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home"></i> الرئيسية</a></li>
+<a class="nav-link" href="{{ url_for('show_jobs') }}"><i class="fas fa-briefcase"></i> الوظائف</a>
+
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('companies') }}"><i class="fas fa-building"></i> الشركات</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}"><i class="fas fa-info-circle"></i> من نحن</a></li>
+
+        {% if session.get('user_id') or session.get('company_id') %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('messages') }}"><i class="fas fa-envelope"></i> الرسائل</a></li>
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        {% if session.get('user_id') or session.get('company_id') %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle me-1"></i> مرحبًا
+            </a>
+            <ul class="dropdown-menu text-end animate__animated animate__fadeIn">
+              <li><a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt me-1"></i> لوحة التحكم</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('messages') }}"><i class="fas fa-envelope me-1"></i> الرسائل</a></li>
+            
+            </ul>
+          </li>
+      <nav>
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}">تسجيل الخروج</a>
+  {% else %}
+    <a href="{{ url_for('login') }}">تسجيل الدخول</a>
+    <a href="{{ url_for('register') }}">إنشاء حساب</a>
+  {% endif %}
+  
+</nav>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- محتوى الصفحة -->
+<div class="container content-wrapper">
+  {% block content %}{% endblock %}
+</div>
+
+<!-- تذييل الصفحة -->
+<footer class="animate__animated animate__fadeInUp">
+  <p>© 2025 شغلني - جميع الحقوق محفوظة</p>
+  <div class="alert alert-warning mt-5 text-center shadow-sm" role="alert" style="direction: rtl;">
+  🚨 <strong>تنويه هام:</strong> منصة <span class="text-primary">شغلني</span> غير مسؤولة عن أي تلاعب أو احتيال من قبل أصحاب العمل. يرجى التحقق من مصداقية الجهات المعلنة قبل تقديم أي بيانات أو مبالغ مالية.
+</div>
+  <div>
+    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+</footer>
+
+<!-- ملفات الجافاسكريبت -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endif %}
+
+{% block extra_scripts %}{% endblock %}
+ 
+</body>
+</html>

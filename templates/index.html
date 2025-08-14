@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}الرئيسية - شغلني{% endblock %}
+{% block title %}الرئيسية - فرصتك{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
 <div class="hero-section bg-primary text-white text-center py-5 animate__animated animate__fadeInDown">
-  <h1 class="display-4">مرحبا بك في شغلني!</h1>
+  <h1 class="display-4">مرحبا بك في فرصتك!</h1>
   <p class="lead">منصة الوظائف الأسرع نموًا في العالم العربي</p>
   <form action="{{ url_for('search_jobs') }}" method="GET" class="d-flex justify-content-center mt-4">
     <input type="text" name="q" class="form-control w-50 me-2" placeholder="ابحث عن وظيفة...">
@@ -21,7 +21,7 @@
       <p>وظيفة متاحة</p>
     </div>
       
->
+
     </div>
   </div>
 </div>

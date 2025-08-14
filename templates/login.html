@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% block title %}تسجيل الدخول - شغلني{% endblock %}
+{% block title %}تسجيل الدخول - فرصتك{% endblock %}
 
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
   <div class="card shadow-lg p-4 w-100" style="max-width: 450px;">
+    
     <h3 class="text-center mb-4">🔐 تسجيل الدخول</h3>
 
     {% if error %}
@@ -11,47 +12,57 @@
     {% endif %}
 
     <form method="POST" action="{{ url_for('login') }}">
+      
+      <!-- البريد الإلكتروني -->
       <div class="mb-3">
         <label for="email" class="form-label">📧 البريد الإلكتروني</label>
         <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required autocomplete="email">
       </div>
 
-      <div class="mb-3 position-relative">
+      <!-- كلمة المرور -->
+      <div class="mb-3">
         <label for="password" class="form-label">🔒 كلمة المرور</label>
         <div class="input-group">
-          <input type="password" name="password" class="form-control" id="password" placeholder="********" required autocomplete="current-password">
-          <button class="btn btn-outline-secondary" type="button" id="togglePassword">👁️</button>
+          <input type="password" name="password" class="form-control" id="password" placeholder="" required autocomplete="current-password">
+          <button class="btn btn-outline-secondary" type="button" id="togglePassword">👁</button>
         </div>
       </div>
 
+      <!-- تذكرني -->
       <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="remember" name="remember">
         <label class="form-check-label" for="remember">تذكرني</label>
       </div>
 
-      <div class="d-grid gap-2">
+      <!-- زر تسجيل الدخول -->
+      <div class="d-grid gap-2 mb-2">
         <button type="submit" class="btn btn-primary">تسجيل دخول</button>
       </div>
 
-      <div class="text-center mt-3">
+      <!-- روابط إضافية -->
+      <div class="text-center mb-3">
         <a href="{{ url_for('recover_password') }}">نسيت كلمة المرور؟</a> |
         <a href="{{ url_for('register') }}">إنشاء حساب</a>
-        <a href="{{ url_for('facebook.login') }}" class="btn btn-primary w-100 mb-3">
-    <i class="fab fa-facebook"></i> تسجيل الدخول باستخدام فيسبوك
-</a>
-
       </div>
+
+      <!-- زر تسجيل الدخول بالفيسبوك -->
+      <a href="{{ url_for('facebook.login') }}" class="btn btn-primary w-100">
+        <i class="fab fa-facebook"></i> تسجيل الدخول باستخدام فيسبوك
+      </a>
+
     </form>
   </div>
 </div>
 
+<!-- Toggle Password Script -->
 <script>
   const togglePassword = document.getElementById('togglePassword');
   const passwordField = document.getElementById('password');
+
   togglePassword.addEventListener('click', () => {
     const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordField.setAttribute('type', type);
-    togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+    togglePassword.textContent = type === 'password' ? '👁' : '🙈';
   });
 </script>
 {% endblock %}

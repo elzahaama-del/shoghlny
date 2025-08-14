@@ -2,15 +2,27 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
+from flask import render_template, abort
+# from models import Application, User
+# from models import db 
 
 db = SQLAlchemy()
+# اشعار
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    message = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    is_read = db.Column(db.Boolean, default=False)
+
+    
+
 
 # جدول المستخدمين
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    # password = db.Column(db.String(200), nullable=False)
-
     name = db.Column(db.String(100))
     username = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -18,23 +30,16 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(20), default='user')  # user, admin, company
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    jobs = db.relationship('Job', backref='poster', lazy=True)
-    applications = db.relationship('Application', backref='applicant', lazy=True)
-    messages_sent = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender', lazy=True)
-    messages_received = db.relationship('Message', foreign_keys='Message.receiver_id', backref='receiver', lazy=True)
-    notifications = db.relationship('Notification', backref='user', lazy=True)
-    saved_jobs = db.relationship('SavedJob', backref='user', lazy=True)
-    settings = db.relationship('UserSettings', backref='user', uselist=False)
-    logs = db.relationship('ActivityLog', backref='user', lazy=True)
-    resumes = db.relationship('Resume', backref='user', lazy=True)
-    logins = db.relationship('LoginHistory', backref='user', lazy=True)
+    # علاقة التطبيقات مع المستخدم باستخدام back_populates
+    applications = db.relationship('Application', back_populates='applicant', lazy=True)
 
+    # باقي العلاقات والخصائص كما هي...
+    
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
 # جدول الشركات
 class Company(db.Model):
     __tablename__ = 'company'
@@ -64,16 +69,22 @@ class Job(db.Model):
 
     applications = db.relationship('Application', backref='job', lazy=True)
     saved_by = db.relationship('SavedJob', backref='job', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 # جدول الطلبات
 class Application(db.Model):
     __tablename__ = 'application'
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey('job.id'), nullable=False)
     status = db.Column(db.String(50), default='pending')  # pending, reviewed, rejected, accepted
     cover_letter = db.Column(db.Text)
     submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
+    applied_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # علاقة المستخدم (المتقدم) مع التطبيق باستخدام back_populates
+    applicant = db.relationship('User', back_populates='applications')
 
 # جدول الوظائف المحفوظة
 class SavedJob(db.Model):
@@ -91,15 +102,16 @@ class Message(db.Model):
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     sent_at = db.Column(db.DateTime, default=datetime.utcnow)
-
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow) 
 # الإشعارات
-class Notification(db.Model):
-    __tablename__ = 'notification'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    content = db.Column(db.String(255))
-    is_read = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+# class Notification(db.Model):
+  
+    # __tablename__ = 'notification'
+    # id = db.Column(db.Integer, primary_key=True)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # content = db.Column(db.String(255))
+    # is_read = db.Column(db.Boolean, default=False)
+    # created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 # سجل النشاطات
 class ActivityLog(db.Model):

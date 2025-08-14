@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}قائمة الوظائف{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">قائمة الوظائف المتاحة</h2>
+
+    {% if jobs %}
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0 rounded-3 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{ job.title }}</h5>
+                            <p class="card-text text-muted">
+                                {{ job.description[:100] }}{% if job.description|length > 100 %}...{% endif %}
+                            </p>
+                            <p class="mb-2"><strong>الموقع:</strong> {{ job.location }}</p>
+                            <p class="mb-2"><strong>تاريخ النشر:</strong> {{ job.created_at.strftime('%Y-%m-%d') }}</p>
+                            <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-outline-primary btn-sm">
+                                عرض التفاصيل
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            لا توجد وظائف متاحة حالياً.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
